@@ -1,16 +1,31 @@
-import { getTodosPosts, criarPost, uploadImagem } from "../models/postsModels.js";
+import { getTodosPosts, criarPost } from "../models/postsModels.js";
+import fs from 'fs';
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
+export async function uploadImagem(req, res) {
+    console.log(req.file); // Verifique se contém path, originalname, etc.
+
+    const newPost = {
+        descricao: "",
+        imgUrl: req.file.originalname,
+        alt: ""
+    
+        // titulo:"",
+        // genero:"",
+        // ano:"",
+        // episodios:"",
+        // imgUrl: req.file.originalname,
+        // alt:""
+    };
+    try {
+        const postCriado = await criarPost(newPost);
+        const imagemAtualizada = `uploads/${postCriado.insertedId}.png`
+        fs.renameSync(req.file.path, imagemAtualizada)
+        res.status(200).json(postCriado);
+    } catch (erro) {
+        console.error(erro.message);
+        res.status(500).json({"Erro":"Falha no servidor"})        
     }
-})
-
-
-const upload = multer({ dest: "./uploads" , storage})
+}
 
 export async function listarPosts (req, res)
 {
@@ -21,30 +36,19 @@ export async function listarPosts (req, res)
 export async function postarNovoPost(req, res) {
     const newPost = req.body;
     try {
-        const postCriado = await criarPost(newPost)
+        
+        const postCriado = await criarPost(newPost);
+        const imagemAtualizada = `uploads/${postCriado.insertedId}.png`
+        fs.renameSync(req.file.path, imagemAtualizada)
         res.status(200).json(postCriado);
     } catch (erro) {
-        console.log(erro.message);
-        res.status(500).json({"Erro":"Falha no servidor"})        
+        console.error(erro.message);
+        res.status(500).json({"Erro":"Falha no servidor"});     
     }
 }
 
-export async function uploadImagem(req, res) {
-    const newPost = {
-        titulo:"",
-        genero:"",
-        ano:"",
-        episodios:"",
-        imgUrl:req.file.originalname,
-        alt:""
-    };
-    try {
-        const postCriado = await criarPost(newPost)
-        res.status(200).json(postCriado);
-    } catch (erro) {
-        console.log(erro.message);
-        res.status(500).json({"Erro":"Falha no servidor"})        
-    }
-}
+
+ 
+
 
 
