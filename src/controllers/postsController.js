@@ -5,16 +5,13 @@ export async function uploadImagem(req, res) {
     console.log(req.file); // Verifique se contém path, originalname, etc.
 
     const newPost = {
-        descricao: "",
+        
+        titulo:"",
+        genero:"",
+        ano:"",
+        episodios:"",
         imgUrl: req.file.originalname,
-        alt: ""
-    
-        // titulo:"",
-        // genero:"",
-        // ano:"",
-        // episodios:"",
-        // imgUrl: req.file.originalname,
-        // alt:""
+        alt:""
     };
     try {
         const postCriado = await criarPost(newPost);
