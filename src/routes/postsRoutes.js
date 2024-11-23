@@ -13,20 +13,13 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({
-         dest: "./uploads", storage});
-                console.log('Salvando em uploads/');
-           
-     
-
-const routes = (app) => {
-    app.use(express.json());
+const upload = multer({ storage: storage });
     
+const routes = (app) => {
+    app.use(express.json());    
     app.get("/posts", listarPosts);
     app.post("/posts", postarNovoPost);
     app.post("/upload", upload.single("imagem"), uploadImagem);
-
 }
-
 
 export default routes;
