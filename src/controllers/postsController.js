@@ -9,9 +9,7 @@ export async function listarPosts(req, res) {
 export async function postarNovoPost(req, res) {
   const newPost = req.body;
   try {
-    const postCriado = await criarPost(newPost);
-    const imagemAtualizada = `uploads/${postCriado.insertedId}`;
-    fs.renameSync(req.file.path, imagemAtualizada);
+    const postCriado = await criarPost(newPost);    
     res.status(200).json(postCriado);
   } catch (erro) {
     console.error(erro.message);
