@@ -14,9 +14,10 @@ export async function uploadImagem(req, res) {
   };
   try {
     const postCriado = await criarPost(newPost);
-    const imagemAtualizada = `uploads/${postCriado.insertedId}.png`;
+    const imagemAtualizada = `uploads/${postCriado.insertedId}.${path.extname(req.file.originalname)}`;
     fs.renameSync(req.file.path, imagemAtualizada);
     res.status(200).json(postCriado);
+    console.log('Arquivo renomeado com sucesso!');
   } catch (erro) {
     console.error(erro.message);
     res.status(500).json({ Erro: "Falha no server" });
@@ -32,7 +33,7 @@ export async function postarNovoPost(req, res) {
   const newPost = req.body;
   try {
     const postCriado = await criarPost(newPost);
-    const imagemAtualizada = `uploads/${postCriado.insertedId}.png`;
+    const imagemAtualizada = `uploads/${postCriado.insertedId}`;
     fs.renameSync(req.file.path, imagemAtualizada);
     res.status(200).json(postCriado);
   } catch (erro) {
