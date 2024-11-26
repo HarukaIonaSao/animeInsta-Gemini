@@ -1,0 +1,1 @@
+STRING_CONEXAO = mongodb+srv://robertaribeiro004:r2v1tA8JHHiOeN33@cluster0.jo71n.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0

@@ -4,12 +4,12 @@ const conexao = await conectarAoBanco(process.env.STRING_CONEXAO);
 
 export async function getTodosPosts(){
     const db = conexao.db("imersao");
-    const colecao = db.collection("animes");
+    const colecao = db.collection("posts");
     return colecao.find().toArray();
 }
 
 export async function criarPost(newPost) {
     const db = conexao.db("imersao");
-    const colecao = db.collection("animes");
+    const colecao = db.collection("posts");
     return colecao.insertOne(newPost);
 }
