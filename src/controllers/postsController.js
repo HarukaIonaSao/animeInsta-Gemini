@@ -18,7 +18,7 @@ export async function postarNovoPost(req, res) {
 }
 
 export async function uploadImagem(req, res) {
-  console.log(req.file); // Verifique se contém path, originalname, etc.
+  console.log(req); // Verifique se contém path, originalname, etc.
 
   const newPost = {
     titulo: "",
@@ -26,7 +26,7 @@ export async function uploadImagem(req, res) {
     ano: "",
     episodios: "",
     imgUrl: req.file.originalname,
-    alt: "",
+    
   };
 
   try {
