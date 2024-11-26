@@ -18,17 +18,15 @@ export async function postarNovoPost(req, res) {
 }
 
 export async function uploadImagem(req, res) {
-  console.log(req); // Verifique se contém path, originalname, etc.
+  console.log('Arquivo enviado',req.file); // Verifique se contém path, originalname, etc.
 
   const newPost = {
-    titulo: "",
-    genero: "",
-    ano: "",
-    episodios: "",
+    descricao:"",
+    data:"",
     imgUrl: req.file.originalname,
-    
+    alt:""    
   };
-
+  res.send('Arquivo enviado com sucesso!');
   try {
     const postCriado = await criarPost(newPost);
     const imagemAtualizada = `uploads/${postCriado.insertedId}.png`;
@@ -37,6 +35,6 @@ export async function uploadImagem(req, res) {
     console.log("Arquivo renomeado com sucesso!");
   } catch (erro) {
     console.error(erro.message);
-    res.status(500).json({ Erro: "Falha no server" });
+    res.status(500).json({ "Erro":"Falha na requisição"});
   }
 }
